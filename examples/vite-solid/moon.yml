@@ -1,0 +1,4 @@
+language: typescript
+type: application
+
+tags: ['solid', vite']

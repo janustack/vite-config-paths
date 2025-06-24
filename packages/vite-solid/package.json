@@ -1,0 +1,76 @@
+{
+  "name": "@plugwalk/vite-solid",
+  "version": "0.1.0",
+  "description": "A Vite plugin for Solid.js applications",
+  "author": "Andrew Christian Young (https://andrewcwhy.me/)",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    "import": "./dist/index.js",
+    "types": "./dist/index.d.ts"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "rolldown -c rolldown.config.ts && tsc --emitDeclarationOnly",
+    "dev": "rolldown -c rolldown.config.ts -w",
+    "prepublishOnly": "bun run build",
+    "release": "bun build && changeset publish",
+    "check": "package-check",
+    "test": "node scripts/test-examples.ts"
+  },
+  "keywords": [
+    "vite",
+    "vite plugin",
+    "vitejs",
+    "vitejs plugin",
+    "vite-plugin",
+    "solid"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@babel/core": "^7.27.4",
+    "@types/babel__core": "^7.20.5",
+    "babel-preset-solid": "^1.9.6",
+    "merge-anything": "^6.0.6",
+    "solid-refresh": "^0.7.5",
+    "vitefu": "^1.0.7"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.27.2",
+    "@babel/preset-typescript": "^7.27.1",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-commonjs": "^28.0.6",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "@skypack/package-check": "^0.2.2",
+    "cypress": "^14.5.0",
+    "cypress-visual-regression": "^5.3.0",
+    "cypress-vite": "^1.6.0",
+    "cypress-wait-until": "^3.0.2",
+    "rolldown": "^1.0.0-beta.19",
+    "rollup-plugin-cleaner": "^1.0.0",
+    "solid-js": "catalog:",
+    "vite": "^6.3.5"
+  },
+  "workspaces": {
+    "packages": [
+      "examples/*",
+      "packages/*"
+    ],
+    "catalog": {
+      "solid-js": "^1.9.5"
+    }
+  },
+  "peerDependencies": {
+    "@testing-library/jest-dom": "latest",
+    "solid-js": "^1.7.2",
+    "vite": "^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@testing-library/jest-dom": {
+      "optional": true
+    }
+  }
+}
