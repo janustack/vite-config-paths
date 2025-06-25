@@ -19,6 +19,10 @@ const external = [
 
 
 export default defineConfig({
+  external,
+  footer: {
+    text: "Made with ❤️ by ACY at Janustack",
+  },
   input: 'index.ts',
   output: [
     {
@@ -27,10 +31,6 @@ export default defineConfig({
       sourcemap: true,
     },
   ],
-  footer: {
-    text: "Made with ❤️ by ACY at Janustack",
-  },
-  external,
   plugins: [
     cleaner({ targets: ['./dist/'] }),
     babel({

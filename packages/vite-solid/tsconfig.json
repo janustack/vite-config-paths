@@ -1,11 +1,5 @@
 {
-  "include": [
-    "src",
-    "cypress"
-, "packages/vite-solid-plug/index.ts"  ],
-  "exclude": [
-    "**/*.spec.ts"
-  ],
+  "extends": "../../tsconfig.options.json",
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
@@ -17,6 +11,5 @@
     "esModuleInterop": false,
     "allowSyntheticDefaultImports": true,
     "declarationDir": "dist/types",
-    "baseUrl": "."
   }
 }

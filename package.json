@@ -2,9 +2,7 @@
     "name": "plugwalk",
     "description": "",
 	"author": "Andrew Christian Young (https://andrewcwhy.me/)",
-    "version": "0.1.0",
     "private": "true",
-    "type": "module",
     "devDependencies": {
         "@biomejs/biome": "2.0.5",
         "@types/bun": "^1.2.17",

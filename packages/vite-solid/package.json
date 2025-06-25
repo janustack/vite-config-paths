@@ -52,7 +52,7 @@
     "rolldown": "^1.0.0-beta.19",
     "rollup-plugin-cleaner": "^1.0.0",
     "solid-js": "catalog:",
-    "vite": "^6.3.5"
+    "vite": "npm:rolldown-vite@latest"
   },
   "workspaces": {
     "packages": [
