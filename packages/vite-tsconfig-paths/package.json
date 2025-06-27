@@ -1,51 +1,51 @@
 {
-  "name": "@plugwalk/vite-tsconfig-paths",
-  "version": "0.1.0",
-  "description": "",
-  "author": "Andrew Christian Young (https://andrewcwhy.me/)",
-  "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    }
-  },
-  "files": [
-    "dist"
-  ],
-  "homepage": "https://github.com/janustack/plugwalk/#readme",
-  "keywords": [
-    "alias",
-    "paths",
-    "resolve",
-    "resolver",
-    "tsconfig",
-    "typescript",
-    "vite"
-  ],
-  "license": "MIT",
-  "publishConfig": {
-    "access": "public"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/janustack/plugwalk.git",
-    "directory": "packages/vite-tsconfig-paths"
-  },
-  "type": "module",
-  "scripts": {
-    "build": "bun bundle",
-    "dev": "bun build --watch"
-  },
-  "dependencies": {
-    "debug": "^4.4.1",
-    "globrex": "^0.1.2",
-    "tsconfck": "^3.1.6"
-  },
-  "devDependencies": {
-    "@types/debug": "^4.1.12",
-    "@types/globrex": "^0.1.4",
-    "is-fs-case-sensitive": "^1.0.0",
-    "tsdown": "catalog:build",
-    "vite": "catalog:build"
-  }
+	"name": "@plugwalk/vite-tsconfig-paths",
+	"version": "0.1.0",
+	"description": "",
+	"author": "Andrew Christian Young (https://andrewcwhy.me/)",
+	"exports": {
+		".": {
+			"import": "./dist/index.js",
+			"types": "./dist/index.d.ts"
+		}
+	},
+	"files": [
+		"dist"
+	],
+	"homepage": "https://github.com/janustack/plugwalk/#readme",
+	"keywords": [
+		"alias",
+		"paths",
+		"resolve",
+		"resolver",
+		"tsconfig",
+		"typescript",
+		"vite"
+	],
+	"license": "MIT",
+	"publishConfig": {
+		"access": "public"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/janustack/plugwalk.git",
+		"directory": "packages/vite-tsconfig-paths"
+	},
+	"type": "module",
+	"scripts": {
+		"build": "bun bundle",
+		"dev": "bun build --watch"
+	},
+	"dependencies": {
+		"debug": "^4.4.1",
+		"globrex": "^0.1.2",
+		"tsconfck": "^3.1.6"
+	},
+	"devDependencies": {
+		"@types/debug": "^4.1.12",
+		"@types/globrex": "^0.1.4",
+		"is-fs-case-sensitive": "^1.0.0",
+		"tsdown": "catalog:build",
+		"vite": "catalog:build"
+	}
 }

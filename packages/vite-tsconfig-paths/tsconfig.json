@@ -1,20 +1,16 @@
 {
-  "include": [
-    "src"
-  ],
-  "compilerOptions": {
-    "declaration": true,
-    "lib": [
-      "ESNext"
-    ],
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "esModuleInterop": true,
-    "noUnusedLocals": true,
-    "outDir": "dist",
-    "sourceMap": true,
-    "strict": true,
-    "target": "ESNext",
-    "composite": true
-  }
+	"include": ["src"],
+	"compilerOptions": {
+		"declaration": true,
+		"lib": ["ESNext"],
+		"module": "ESNext",
+		"moduleResolution": "bundler",
+		"esModuleInterop": true,
+		"noUnusedLocals": true,
+		"outDir": "dist",
+		"sourceMap": true,
+		"strict": true,
+		"target": "ESNext",
+		"composite": true
+	}
 }

@@ -1,59 +1,59 @@
 {
-  "name": "@plugwalk/vite-solid",
-  "version": "0.1.0",
-  "description": "",
-  "author": "Andrew Christian Young (https://andrewcwhy.me/)",
-  "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    }
-  },
-  "files": [
-    "dist"
-  ],
-  "homepage": "https://github.com/janustack/plugwalk/#readme",
-  "keywords": [
-    "vite",
-    "vite plugin",
-    "vitejs",
-    "vitejs plugin",
-    "vite-plugin",
-    "solid"
-  ],
-  "license": "MIT",
-  "publishConfig": {
-    "access": "public"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/janustack/plugwalk.git",
-    "directory": "packages/vite-tsconfig-paths"
-  },
-  "type": "module",
-  "scripts": {
-    "build": "tsdown",
-    "dev": "bun run build --watch"
-  },
-  "dependencies": {
-    "@babel/core": "^7.27.4",
-    "@types/babel__core": "^7.20.5",
-    "babel-preset-solid": "^1.9.6",
-    "merge-anything": "^6.0.6",
-    "solid-refresh": "^0.7.5",
-    "vitefu": "^1.0.7"
-  },
-  "devDependencies": {
-    "@babel/preset-env": "^7.27.2",
-    "@babel/preset-typescript": "^7.27.1",
-    "@rollup/plugin-babel": "^6.0.4",
-    "@rollup/plugin-node-resolve": "^16.0.1",
-    "cypress": "^14.5.0",
-    "cypress-visual-regression": "^5.3.0",
-    "cypress-vite": "^1.6.0",
-    "cypress-wait-until": "^3.0.2",
-    "rollup-plugin-cleaner": "^1.0.0",
-    "solid-js": "catalog:",
-    "vite": "catalog:build"
-  }
+	"name": "@plugwalk/vite-solid",
+	"version": "0.1.0",
+	"description": "",
+	"author": "Andrew Christian Young (https://andrewcwhy.me/)",
+	"exports": {
+		".": {
+			"import": "./dist/index.js",
+			"types": "./dist/index.d.ts"
+		}
+	},
+	"files": [
+		"dist"
+	],
+	"homepage": "https://github.com/janustack/plugwalk/#readme",
+	"keywords": [
+		"vite",
+		"vite plugin",
+		"vitejs",
+		"vitejs plugin",
+		"vite-plugin",
+		"solid"
+	],
+	"license": "MIT",
+	"publishConfig": {
+		"access": "public"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/janustack/plugwalk.git",
+		"directory": "packages/vite-tsconfig-paths"
+	},
+	"type": "module",
+	"scripts": {
+		"build": "tsdown",
+		"dev": "bun run build --watch"
+	},
+	"dependencies": {
+		"@babel/core": "^7.27.4",
+		"@types/babel__core": "^7.20.5",
+		"babel-preset-solid": "^1.9.6",
+		"merge-anything": "^6.0.6",
+		"solid-refresh": "^0.7.5",
+		"vitefu": "^1.0.7"
+	},
+	"devDependencies": {
+		"@babel/preset-env": "^7.27.2",
+		"@babel/preset-typescript": "^7.27.1",
+		"@rollup/plugin-babel": "^6.0.4",
+		"@rollup/plugin-node-resolve": "^16.0.1",
+		"cypress": "^14.5.0",
+		"cypress-visual-regression": "^5.3.0",
+		"cypress-vite": "^1.6.0",
+		"cypress-wait-until": "^3.0.2",
+		"rollup-plugin-cleaner": "^1.0.0",
+		"solid-js": "catalog:",
+		"vite": "catalog:build"
+	}
 }
