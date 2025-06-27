@@ -1,20 +1,33 @@
 {
     "name": "plugwalk",
     "description": "",
-	"author": "Andrew Christian Young (https://andrewcwhy.me/)",
+    "author": "Andrew Christian Young (https://andrewcwhy.me/)",
     "private": "true",
     "devDependencies": {
         "@biomejs/biome": "2.0.5",
+        "@janfig/tsconfig": "^0.1.1",
+        "@moonrepo/cli": "^1.38.0",
         "@types/bun": "^1.2.17",
         "typescript": "^5.8.3"
     },
+    "trustedDependencies": ["@moonrepo/cli"],
     "workspaces": {
         "packages": [
-            "examples/*",
+            "demo",
             "packages/*"
         ],
         "catalog": {
             "solid-js": "^1.9.5"
+        },
+        "catalogs": {
+            "build": {
+                "rolldown": "^1.0.0-beta.20",
+                "tsdown": "^0.12.9",
+                "vite": "^7.0.0"
+            },
+            "plugins": {
+                "vite-plugin-solid": "^2.11.7"
+            }
         }
     }
 }

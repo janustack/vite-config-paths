@@ -1,19 +1,19 @@
 import * as babel from '@babel/core';
 import solid from 'babel-preset-solid';
-import { readFileSync } from 'fs';
 import { mergeAndConcat } from 'merge-anything';
+import { readFileSync } from 'node:fs';
 import solidRefresh from 'solid-refresh/babel';
 import type { Alias, AliasOptions, FilterPattern, Plugin } from 'vite';
 import { createFilter, version } from 'vite';
 import { crawlFrameworkPkgs } from 'vitefu';
 
 
-const runtimeFileUrl = await import.meta.resolve(
-  'solid-refresh/dist/solid-refresh.mjs',
-  import.meta.url
-);
+const require = createRequire(import.meta.url);
+
 const runtimePublicPath = '/@solid-refresh';
-const runtimeFilePath = fileURLToPath(runtimeFileUrl);
+
+const runtimeFilePath = require.resolve('solid-refresh/dist/solid-refresh.mjs');
+
 const runtimeCode = readFileSync(runtimeFilePath, 'utf-8');
 
 const isVite6 = version.startsWith('6.');

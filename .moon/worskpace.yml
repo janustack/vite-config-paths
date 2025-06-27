@@ -1,0 +1,14 @@
+# https://moonrepo.dev/docs/config/workspace
+$schema: https://moonrepo.dev/schemas/workspace.json
+
+constraints:
+  tagRelationships:
+    vite:
+      - solid
+
+projects:
+  - demo
+  - packages/*
+
+vcs:
+  defaultBranch: main

@@ -5,4 +5,4 @@ language: typescript
 type: library
 
 tags:
-  - solid
+  - vite

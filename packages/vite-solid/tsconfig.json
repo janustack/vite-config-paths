@@ -1,15 +1,10 @@
 {
-  "extends": "../../tsconfig.options.json",
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "nodenext",
-    "strict": false,
-    "declaration": true,
-    "noUnusedLocals": true,
-    "skipLibCheck": true,
-    "esModuleInterop": false,
-    "allowSyntheticDefaultImports": true,
-    "declarationDir": "dist/types",
-  }
+    "outDir": "dist",
+    "rootDir": "src"
+  },
+  "extends": "../../tsconfig.options.json",
+  "include": [
+    "src/**/*"
+  ]
 }

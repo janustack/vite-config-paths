@@ -1,12 +1,8 @@
 {
 	"extends": "./tsconfig.options.json",
-	"files": [],
 	"references": [
-        {
-            "path": "examples/vite-solid"
-        },
 		{
-			"path": "packages/vite-solid"
+			"path": "packages/vite-tsconfig-paths"
 		}
 	]
 }

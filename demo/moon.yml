@@ -2,7 +2,10 @@
 $schema: https://moonrepo.dev/schemas/project.json
 
 language: typescript
-type: library
+type: application
 
 tags:
-  - solid
+  - vite
+
+dependsOn:
+  - vite-tsconfig-paths
