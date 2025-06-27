@@ -1,17 +1,24 @@
 {
 	"compilerOptions": {
-		"baseUrl": ".",
-		"lib": ["DOM", "DOM.Iterable", "ESNext"],
+		"lib": [
+			"DOM",
+			"DOM.Iterable",
+			"ESNext"
+		],
 		"jsx": "preserve",
 		"jsxImportSource": "solid-js",
 		"noEmit": true,
 		"paths": {
-			":*": ["./src/*"],
+			":*": [
+				"./src/*"
+			],
 			"@plugwalk/vite-tsconfig-paths": [
 				"../../packages/vite-tsconfig-paths/src/index.ts"
 			]
 		},
-		"types": ["vite/client"]
+		"types": [
+			"vite/client"
+		]
 	},
 	"extends": "../tsconfig.options.json",
 	"references": [

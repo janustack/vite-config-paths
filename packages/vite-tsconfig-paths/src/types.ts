@@ -1,6 +1,6 @@
 import type { TSConfckParseNativeResult, TSConfckParseResult } from "tsconfck";
 import type { CompilerOptions, ParsedCommandLine } from "typescript";
-import { NormalizedPath } from "./path";
+import type { NormalizedPath } from "./path";
 
 export interface PluginOptions {
 	/**

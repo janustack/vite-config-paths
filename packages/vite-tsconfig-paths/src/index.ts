@@ -1,12 +1,15 @@
 import * as fs from "node:fs";
 import { readdir } from "node:fs/promises";
+import { isAbsolute, join, relative } from "node:path";
 import globRex from "globrex";
 import * as tsconfck from "tsconfck";
-import { isAbsolute, join, relative } from "node:path";
-import { inspect } from "node:util";
 import type { ViteDevServer } from "vite";
 import * as vite from "vite";
-import { debug } from "./debug";
+import {
+	FilePathMap,
+	fixFilePathCasing,
+	includesFilePath,
+} from "./FilePathMap";
 import { resolvePathMappings } from "./mappings";
 import type { NormalizedPath } from "./path";
 import * as path from "./path";
@@ -17,12 +20,6 @@ import type {
 	Resolver,
 	ViteResolve,
 } from "./types";
-import { createLogFile } from "./logFile";
-import {
-	FilePathMap,
-	fixFilePathCasing,
-	includesFilePath,
-} from "./FilePathMap";
 
 const notApplicable = [undefined, false] as const;
 const notFound = [undefined, true] as const;
@@ -59,16 +56,6 @@ export default (opts: PluginOptions = {}): vite.Plugin => {
 		"tsconfig.json",
 		"jsconfig.json",
 	];
-	debug(
-		"Only tsconfig files with a name in this list will be lazily discovered:",
-		configNames,
-	);
-
-	const logFile = opts.logFile
-		? createLogFile(
-				opts.logFile === true ? "vite-tsconfig-paths.log" : opts.logFile,
-			)
-		: null;
 
 	return {
 		name: "vite-tsconfig-paths",
@@ -79,14 +66,11 @@ export default (opts: PluginOptions = {}): vite.Plugin => {
 			let { root } = opts;
 			if (root) {
 				root = projectRoot = workspaceRoot = path.resolve(config.root, root);
-				debug("Forced root:", root);
 			} else {
 				projectRoot = path.normalize(config.root);
 				workspaceRoot = path.normalize(
 					vite.searchForWorkspaceRoot(config.root),
 				);
-				debug("Project root:  ", projectRoot);
-				debug("Workspace root:", workspaceRoot);
 			}
 
 			hasTypeScriptDep = false;
@@ -123,18 +107,15 @@ export default (opts: PluginOptions = {}): vite.Plugin => {
 
 				return projectPromise.catch((error) => {
 					if (opts.ignoreConfigErrors) {
-						debug("[!] Failed to parse tsconfig file at %s", tsconfigFile);
-						if (isFirstParseError) {
-							debug("Remove the `ignoreConfigErrors` option to see the error.");
-						}
+						// Error is ignored
 					} else {
 						viteLogger.error(
 							'[tsconfig-paths] An error occurred while parsing "' +
-								tsconfigFile +
-								'". See below for details.' +
-								(isFirstParseError
-									? " To disable this message, set the `ignoreConfigErrors` option to true."
-									: ""),
+							tsconfigFile +
+							'". See below for details.' +
+							(isFirstParseError
+								? " To disable this message, set the `ignoreConfigErrors` option to true."
+								: ""),
 							{ error },
 						);
 						if (!viteLogger.hasErrorLogged(error)) {
@@ -227,10 +208,6 @@ export default (opts: PluginOptions = {}): vite.Plugin => {
 				);
 				if (index !== -1) {
 					const project = data.projects[index];
-					debug(
-						`Unloading project because of ${event} event:`,
-						project.tsconfigFile,
-					);
 
 					resolversByProject.delete(project);
 					data.projects.splice(index, 1);
@@ -272,8 +249,6 @@ export default (opts: PluginOptions = {}): vite.Plugin => {
 						skip: shouldSkipDir,
 					}));
 
-				debug("Eagerly parsing these projects:", projectPaths);
-
 				await Promise.all(
 					Array.from(new Set(projectPaths), (p) => loadProject(p)),
 				);
@@ -284,7 +259,6 @@ export default (opts: PluginOptions = {}): vite.Plugin => {
 
 			// Only used when projectDiscovery is 'lazy'.
 			const discoverProjects = async (dir: NormalizedPath, data: Directory) => {
-				debug("Searching directory for tsconfig files:", dir);
 				const names = await readdir(dir).catch(() => []);
 
 				await Promise.all(
@@ -297,16 +271,9 @@ export default (opts: PluginOptions = {}): vite.Plugin => {
 
 				if (data.projects.length) {
 					sortProjects(data.projects);
-					if (debug.enabled) {
-						debug(
-							`Directory "${dir}" contains the following tsconfig files:`,
-							data.projects.map((p) => path.basename(p.tsconfigFile)),
-						);
-					}
 				} else {
 					// No projects found. Reduce memory usage with a stand-in.
 					directoryCache.set(dir, emptyDirectory);
-					debug("No tsconfig files found in directory:", dir);
 				}
 			};
 
@@ -375,15 +342,12 @@ export default (opts: PluginOptions = {}): vite.Plugin => {
 		},
 		async resolveId(id, importer, options) {
 			if (!importer) {
-				logFile?.write("emptyImporter", { importer, id });
 				return;
 			}
 			if (relativeImportRE.test(id)) {
-				logFile?.write("relativeId", { importer, id });
 				return;
 			}
 			if (id.includes("\0")) {
-				logFile?.write("virtualId", { importer, id });
 				return;
 			}
 
@@ -398,14 +362,11 @@ export default (opts: PluginOptions = {}): vite.Plugin => {
 				if (index !== -1) {
 					const query = path.normalize(importer.slice(index + 1));
 					if (path.isAbsolute(query) && fs.existsSync(query)) {
-						debug("Rewriting virtual importer to real file:", importer);
 						importerFile = query;
 					} else {
-						logFile?.write("virtualImporter", { importer, id });
 						return;
 					}
 				} else {
-					logFile?.write("virtualImporter", { importer, id });
 					return;
 				}
 			}
@@ -454,16 +415,11 @@ export default (opts: PluginOptions = {}): vite.Plugin => {
 		const configPath = project.tsconfigFile;
 		const config = project.tsconfig;
 
-		debug("Config loaded:", inspect({ configPath, config }, false, 10, true));
-
 		// Sometimes a tsconfig is not meant to be used for path resolution,
 		// but rather for pointing to other tsconfig files and possibly being
 		// extended by them. This is represented by an explicitly empty "files"
 		// array and a missing/empty "include" array.
 		if (config.files?.length == 0 && !config.include?.length) {
-			debug(
-				`[!] Skipping "${configPath}" as no files can be matched since "files" is empty and "include" is missing or empty.`,
-			);
 			return null;
 		}
 
@@ -478,21 +434,15 @@ export default (opts: PluginOptions = {}): vite.Plugin => {
 
 		const resolveWithBaseUrl: InternalResolver | undefined = baseUrl
 			? async (viteResolve, id, importer) => {
-					if (id[0] === "/") {
-						return;
-					}
-					const absoluteId = join(baseUrl, id);
-					const resolvedId = await viteResolve(absoluteId, importer);
-					if (resolvedId) {
-						logFile?.write("resolvedWithBaseUrl", {
-							importer,
-							id,
-							resolvedId,
-							configPath,
-						});
-						return resolvedId;
-					}
+				if (id[0] === "/") {
+					return;
 				}
+				const absoluteId = join(baseUrl, id);
+				const resolvedId = await viteResolve(absoluteId, importer);
+				if (resolvedId) {
+					return resolvedId;
+				}
+			}
 			: undefined;
 
 		let resolveId: InternalResolver;
@@ -505,13 +455,12 @@ export default (opts: PluginOptions = {}): vite.Plugin => {
 				id,
 				importer,
 			) => {
-				const candidates = logFile ? ([] as string[]) : null;
 				for (const mapping of pathMappings) {
 					const match = id.match(mapping.pattern);
 					if (!match) {
 						continue;
 					}
-					for (let pathTemplate of mapping.paths) {
+					for (const pathTemplate of mapping.paths) {
 						let starCount = 0;
 						const mappedId = pathTemplate.replace(/\*/g, () => {
 							// There may exist more globs in the path template than in
@@ -520,25 +469,12 @@ export default (opts: PluginOptions = {}): vite.Plugin => {
 							const matchIndex = Math.min(++starCount, match.length - 1);
 							return match[matchIndex];
 						});
-						candidates?.push(mappedId);
 						const resolvedId = await viteResolve(mappedId, importer);
 						if (resolvedId) {
-							logFile?.write("resolvedWithPaths", {
-								importer,
-								id,
-								resolvedId,
-								configPath,
-							});
 							return resolvedId;
 						}
 					}
 				}
-				logFile?.write("notFound", {
-					importer,
-					id,
-					candidates,
-					configPath,
-				});
 			};
 
 			if (resolveWithBaseUrl) {
@@ -551,7 +487,6 @@ export default (opts: PluginOptions = {}): vite.Plugin => {
 		} else if (resolveWithBaseUrl) {
 			resolveId = resolveWithBaseUrl;
 		} else {
-			debug(`[!] Skipping "${configPath}" as no paths or baseUrl are defined.`);
 			return null;
 		}
 
@@ -575,7 +510,7 @@ export default (opts: PluginOptions = {}): vite.Plugin => {
 		const importerExtRE = opts.loose
 			? /$/
 			: compilerOptions.allowJs ||
-					path.basename(configPath).startsWith("jsconfig.")
+				path.basename(configPath).startsWith("jsconfig.")
 				? /\.(astro|mdx|svelte|vue|[mc]?[jt]sx?)$/
 				: /\.[mc]?tsx?$/;
 
@@ -587,14 +522,12 @@ export default (opts: PluginOptions = {}): vite.Plugin => {
 
 			// Ignore importers with unsupported extensions.
 			if (!importerExtRE.test(importerFile)) {
-				logFile?.write("unsupportedExtension", { importer, id });
 				return notApplicable;
 			}
 
 			// Respect the include/exclude properties.
 			const relativeImporterFile = path.relative(configDir, importerFile);
 			if (!isIncludedRelative(relativeImporterFile)) {
-				logFile?.write("configMismatch", { importer, id, configPath });
 				return notApplicable;
 			}
 
@@ -607,12 +540,7 @@ export default (opts: PluginOptions = {}): vite.Plugin => {
 
 			let resolvedId = resolutionCache.get(id);
 			if (resolvedId) {
-				logFile?.write("resolvedFromCache", {
-					importer,
-					id,
-					resolvedId,
-					configPath,
-				});
+				// From cache
 			} else {
 				resolvedId = await resolveId(viteResolve, id, importer);
 				if (!resolvedId) {
@@ -657,19 +585,6 @@ function getIncluder(
 
 		includePaths.forEach(addCompiledGlob, includers);
 		excludePaths.forEach(addCompiledGlob, excluders);
-
-		if (debug.enabled) {
-			debug(`Compiled tsconfig globs:`, {
-				include: {
-					globs: includePaths,
-					regexes: includers,
-				},
-				exclude: {
-					globs: excludePaths,
-					regexes: excluders,
-				},
-			});
-		}
 
 		return (path: string) => {
 			path = path.replace(/\?.+$/, "");

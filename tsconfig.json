@@ -2,6 +2,9 @@
 	"extends": "./tsconfig.options.json",
 	"references": [
 		{
+			"path": "demo"
+		},
+		{
 			"path": "packages/vite-tsconfig-paths"
 		}
 	]

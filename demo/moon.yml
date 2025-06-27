@@ -8,4 +8,9 @@ tags:
   - vite
 
 dependsOn:
-  - vite-tsconfig-paths
+  - vtcp
+
+tasks:
+  build:
+      deps:
+        - '^:build'

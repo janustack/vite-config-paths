@@ -32,17 +32,11 @@
 		"directory": "packages/vite-tsconfig-paths"
 	},
 	"type": "module",
-	"scripts": {
-		"build": "bun bundle",
-		"dev": "bun build --watch"
-	},
 	"dependencies": {
-		"debug": "^4.4.1",
 		"globrex": "^0.1.2",
 		"tsconfck": "^3.1.6"
 	},
 	"devDependencies": {
-		"@types/debug": "^4.1.12",
 		"@types/globrex": "^0.1.4",
 		"is-fs-case-sensitive": "^1.0.0",
 		"tsdown": "catalog:build",
