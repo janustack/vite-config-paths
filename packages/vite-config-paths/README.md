@@ -22,11 +22,11 @@ bun add -d @janustack/vite-config-paths
 2. Add `@janustack/vite-config-paths` to your Vite plugins in `vite.config.ts`:
 
    ```ts
-   import tsconfigPaths from '@janustack/vite-config-paths'
+   import configPaths from '@janustack/vite-config-paths'
    import { defineConfig } from 'vite'
 
    export default defineConfig({
-     plugins: [tsconfigPaths()],
+     plugins: [configPaths()],
    })
    ```
 
@@ -49,7 +49,7 @@ To enable path resolution in non-TypeScript modules (e.g. `.vue`, `.svelte`, `.m
 **Alternative:** If you prefer to avoid `allowJs` or it didn't help, passing `loose: true` to the plugin constructor should work.
 
 ```ts
-tsconfigPaths({ loose: true })
+configPaths({ loose: true })
 ```
 
 ## Plugin Options
@@ -60,11 +60,11 @@ You pass these options when calling the plugin constructor in your Vite config.
 > You should try using the plugin without *any* of these options, and only set them when you know you need them.
 
 ```ts
-import tsconfigPaths from '@janustack/vite-config-paths'
+import configPaths from '@janustack/vite-config-paths'
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  plugins: [tsconfigPaths({ /* options go here */ })],
+  plugins: [configPaths({ /* options go here */ })],
 })
 ```
 
@@ -113,9 +113,3 @@ While `.git` and `node_modules` directories are always skipped, this option allo
 ### allowJs
 
 If your tsconfig file has `"allowJs": true` in it, path resolution will be expanded beyond TypeScript importers. The following extensions will have their imports resolved by this plugin: `.vue`, `.svelte`, `.mdx`, `.mjs`, `.js`, `.jsx`
-
-If you believe another file extension should be supported by default, please open an issue or pull request.
-
-### include/exclude
-
-The `include` and `exclude` tsconfig options are respected.

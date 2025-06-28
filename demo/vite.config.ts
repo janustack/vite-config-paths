@@ -1,4 +1,4 @@
-import tsconfigPaths from "@janustack/vite-config-paths";
+import configPaths from "@janustack/vite-config-paths";
 import tailwindCSS from "@tailwindcss/vite";
 import { tanstackRouter } from "@tanstack/router-plugin/vite";
 import { defineConfig } from "vite";
@@ -10,7 +10,7 @@ export default defineConfig({
 		tanstackRouter({ target: "solid", autoCodeSplitting: true }),
 		solid(),
 		tailwindCSS(),
-		tsconfigPaths(),
+		configPaths(),
 	],
 	server: {
 		port: 9705,
