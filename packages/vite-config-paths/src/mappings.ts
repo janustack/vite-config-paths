@@ -31,14 +31,6 @@ function getPrefixLength(pattern: string): number {
 	return pattern.substr(0, prefixLength).length;
 }
 
-// Adapted from:
-// https://github.com/sindresorhus/escape-string-regexp/blob/ba9a4473850cb367936417e97f1f2191b7cc67dd/index.js
-//
-// MIT License
-//
-// Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://
-// sindresorhus.com)
-//
 function escapeStringRegexp(string: string) {
 	// Escape characters with special meaning either inside or outside
 	// character sets. Use a simple backslash escape when it’s always

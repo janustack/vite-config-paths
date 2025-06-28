@@ -58,7 +58,7 @@ export default (opts: PluginOptions = {}): vite.Plugin => {
 	];
 
 	return {
-		name: "vite-tsconfig-paths",
+		name: "vite-config-paths",
 		enforce: "pre",
 		configResolved(config) {
 			viteLogger = config.logger;
@@ -111,11 +111,11 @@ export default (opts: PluginOptions = {}): vite.Plugin => {
 					} else {
 						viteLogger.error(
 							'[tsconfig-paths] An error occurred while parsing "' +
-							tsconfigFile +
-							'". See below for details.' +
-							(isFirstParseError
-								? " To disable this message, set the `ignoreConfigErrors` option to true."
-								: ""),
+								tsconfigFile +
+								'". See below for details.' +
+								(isFirstParseError
+									? " To disable this message, set the `ignoreConfigErrors` option to true."
+									: ""),
 							{ error },
 						);
 						if (!viteLogger.hasErrorLogged(error)) {
@@ -434,15 +434,15 @@ export default (opts: PluginOptions = {}): vite.Plugin => {
 
 		const resolveWithBaseUrl: InternalResolver | undefined = baseUrl
 			? async (viteResolve, id, importer) => {
-				if (id[0] === "/") {
-					return;
+					if (id[0] === "/") {
+						return;
+					}
+					const absoluteId = join(baseUrl, id);
+					const resolvedId = await viteResolve(absoluteId, importer);
+					if (resolvedId) {
+						return resolvedId;
+					}
 				}
-				const absoluteId = join(baseUrl, id);
-				const resolvedId = await viteResolve(absoluteId, importer);
-				if (resolvedId) {
-					return resolvedId;
-				}
-			}
 			: undefined;
 
 		let resolveId: InternalResolver;
@@ -510,7 +510,7 @@ export default (opts: PluginOptions = {}): vite.Plugin => {
 		const importerExtRE = opts.loose
 			? /$/
 			: compilerOptions.allowJs ||
-				path.basename(configPath).startsWith("jsconfig.")
+					path.basename(configPath).startsWith("jsconfig.")
 				? /\.(astro|mdx|svelte|vue|[mc]?[jt]sx?)$/
 				: /\.[mc]?tsx?$/;
 
@@ -561,11 +561,7 @@ export default (opts: PluginOptions = {}): vite.Plugin => {
 
 const relativeImportRE = /^\.\.?(\/|$)/;
 const defaultInclude = ["**/*"];
-const defaultExclude = [
-	"**/node_modules",
-	"**/bower_components",
-	"**/jspm_packages",
-];
+const defaultExclude = ["**/node_modules"];
 
 /**
  * The returned function does not support absolute paths.

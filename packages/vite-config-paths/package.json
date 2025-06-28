@@ -1,7 +1,7 @@
 {
-	"name": "@plugwalk/vite-tsconfig-paths",
+	"name": "@janustack/vite-config-paths",
 	"version": "0.1.0",
-	"description": "",
+	"description": "Give Vite the ability to resolve imports using TypeScript's path mapping.",
 	"author": "Andrew Christian Young (https://andrewcwhy.me/)",
 	"exports": {
 		".": {
@@ -28,8 +28,8 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/janustack/plugwalk.git",
-		"directory": "packages/vite-tsconfig-paths"
+		"url": "https://github.com/janustack/vite-config-paths.git",
+		"directory": "packages/vite-config-paths"
 	},
 	"type": "module",
 	"dependencies": {

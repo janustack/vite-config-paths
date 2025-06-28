@@ -5,7 +5,7 @@
 			"path": "demo"
 		},
 		{
-			"path": "packages/vite-tsconfig-paths"
+			"path": "packages/vite-config-paths"
 		}
 	]
 }

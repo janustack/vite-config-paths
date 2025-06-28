@@ -1,16 +1,18 @@
 {
-    "name": "plugwalk",
-    "description": "",
+    "name": "vite-config-paths",
+    "description": "Monorepo for vite-config-paths.",
     "author": "Andrew Christian Young (https://andrewcwhy.me/)",
     "private": "true",
     "devDependencies": {
-        "@biomejs/biome": "2.0.5",
+        "@biomejs/biome": "2.0.6",
         "@janfig/tsconfig": "^0.1.1",
         "@moonrepo/cli": "^1.38.0",
         "@types/bun": "^1.2.17",
         "typescript": "^5.8.3"
     },
-    "trustedDependencies": ["@moonrepo/cli"],
+    "trustedDependencies": [
+        "@moonrepo/cli"
+    ],
     "workspaces": {
         "packages": [
             "demo",

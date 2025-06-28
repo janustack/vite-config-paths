@@ -14,7 +14,7 @@
 		"tailwindcss": "^4.1.11"
 	},
 	"devDependencies": {
-		"@plugwalk/vite-tsconfig-paths": "workspace:*",
+		"@janustack/vite-config-paths": "workspace:*",
 		"@tanstack/router-plugin": "^1.121.40",
 		"vite": "catalog:build",
 		"vite-plugin-solid": "catalog:plugins"

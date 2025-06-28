@@ -1,4 +1,4 @@
-import tsconfigPaths from "@plugwalk/vite-tsconfig-paths";
+import tsconfigPaths from "@janustack/vite-config-paths";
 import tailwindCSS from "@tailwindcss/vite";
 import { tanstackRouter } from "@tanstack/router-plugin/vite";
 import { defineConfig } from "vite";

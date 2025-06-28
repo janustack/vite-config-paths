@@ -5,5 +5,4 @@ export default defineConfig({
 	entry: ["src/index.ts"],
 	external: ["lightningcss", "vite"],
 	minify: true,
-	sourcemap: true,
 });

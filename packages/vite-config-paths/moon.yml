@@ -4,11 +4,11 @@ $schema: https://moonrepo.dev/schemas/project.json
 language: typescript
 type: library
 
-id: "vtcp"
+id: "vcp"
 
 project:
-  name: "vite-tsconfig-paths"
-  description: "vtcp is an alias for vite-tsconfig-paths, a Vite plugin that resolves imports pusing TypeScript's path mapping."
+  name: "vite-config-paths"
+  description: "vcp is an alias for vite-config-paths, a Vite plugin that resolves imports pusing TypeScript's path mapping."
 
 tasks:
   build:

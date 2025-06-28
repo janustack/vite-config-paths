@@ -1,0 +1,10 @@
+{
+	"$schema": "https://jsr.io/schema/config-file.v1.json",
+	"name": "@janustack/vite-config-paths",
+	"version": "0.1.0",
+	"exports": "./src/index.ts",
+	"license": "MIT",
+	"publish": {
+		"include": ["src", "LICENSE", "README.md"]
+	}
+}

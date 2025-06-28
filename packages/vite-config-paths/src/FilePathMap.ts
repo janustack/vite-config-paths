@@ -7,32 +7,32 @@ const caseSensitive = !["win32", "darwin"].includes(platform());
  * Normalize file path casing according to filesystem sensitivity.
  */
 export function fixFilePathCasing(filePath: string): string {
-  return caseSensitive ? filePath : filePath.toLowerCase();
+	return caseSensitive ? filePath : filePath.toLowerCase();
 }
 
 /**
  * Check if an array includes a file path, normalizing casing.
  */
 export function includesFilePath(array: string[], filePath: string): boolean {
-  return array.includes(fixFilePathCasing(filePath));
+	return array.includes(fixFilePathCasing(filePath));
 }
 
 /**
  * A Map keyed by normalized file paths.
  */
 export class FilePathMap<T> {
-  private map = new Map<string, T>();
+	private map = new Map<string, T>();
 
-  get(filePath: string): T | undefined {
-    return this.map.get(fixFilePathCasing(filePath));
-  }
+	get(filePath: string): T | undefined {
+		return this.map.get(fixFilePathCasing(filePath));
+	}
 
-  set(filePath: string, value: T): this {
-    this.map.set(fixFilePathCasing(filePath), value);
-    return this;
-  }
+	set(filePath: string, value: T): this {
+		this.map.set(fixFilePathCasing(filePath), value);
+		return this;
+	}
 
-  values(): IterableIterator<T> {
-    return this.map.values();
-  }
+	values(): IterableIterator<T> {
+		return this.map.values();
+	}
 }
